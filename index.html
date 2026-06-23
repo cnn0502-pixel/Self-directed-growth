@@ -14,17 +14,17 @@
 
 <style>
   :root{
-    --bg:#0d1117;          /* 제어반 본체 */
-    --panel:#161b22;        /* 패널 면 */
-    --panel-2:#1c232c;      /* 패널 음각 */
-    --line:#283039;         /* 헤어라인 */
+    --bg:#0d1117;
+    --panel:#161b22;
+    --panel-2:#1c232c;
+    --line:#283039;
     --line-2:#323b46;
-    --txt:#e6edf3;          /* 주 텍스트 */
-    --muted:#7d8896;        /* 보조 */
+    --txt:#e6edf3;
+    --muted:#7d8896;
     --dim:#5a6570;
-    --on:#3fe0a0;           /* 점등(완료) 시그널 그린 */
+    --on:#3fe0a0;
     --on-glow:rgba(63,224,160,.18);
-    --amber:#f5b14c;        /* 스트릭/강조 */
+    --amber:#f5b14c;
     --amber-dim:rgba(245,177,76,.15);
     --mono:ui-monospace,'SF Mono',Menlo,monospace;
     --sans:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Pretendard',sans-serif;
@@ -38,14 +38,12 @@
     background-image:radial-gradient(120% 60% at 50% -10%, #131a22 0%, var(--bg) 60%);
   }
 
-  /* ===== 헤더 ===== */
   .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
   .head .label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
   .head .live{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em}
   .live .dot{width:7px;height:7px;border-radius:50%;background:var(--on);box-shadow:0 0 8px var(--on)}
   h1{font-size:20px;font-weight:700;letter-spacing:-.01em;margin:2px 0 18px}
 
-  /* ===== 상단 게이지 + 스트릭 ===== */
   .gauges{display:grid;grid-template-columns:1.15fr 1fr;gap:12px;margin-bottom:22px}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
   .gauge-card{display:flex;align-items:center;gap:14px}
@@ -64,13 +62,11 @@
   .streak-card .u{font-size:12px;color:var(--dim)}
   .streak-card .hint{font-size:10.5px;color:var(--dim);margin-top:8px;line-height:1.4}
 
-  /* ===== 섹션 라벨 ===== */
   .sec{display:flex;align-items:baseline;gap:10px;margin:0 2px 12px}
   .sec .n{font-family:var(--mono);font-size:11px;color:var(--on);letter-spacing:.15em}
   .sec h2{font-size:14px;font-weight:600;letter-spacing:-.01em}
   .sec .r{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--dim)}
 
-  /* ===== 오늘의 점검 (지시등 행) ===== */
   .checks{display:flex;flex-direction:column;gap:8px;margin-bottom:26px}
   .row{
     display:flex;align-items:center;gap:14px;background:var(--panel);
@@ -93,7 +89,18 @@
   .row .txt{font-size:13.5px;line-height:1.35;color:var(--txt);font-weight:450}
   .row.on .txt{color:#fff}
 
-  /* ===== 월간/주간 게이지 ===== */
+  /* 오늘의 단 하나 — 최우선 과제 (입력형) */
+  .row.prio{align-items:flex-start;cursor:default;border-color:rgba(245,177,76,.32);
+    background:linear-gradient(90deg,var(--amber-dim),transparent 55%),var(--panel)}
+  .row.prio .lamp{margin-top:2px;cursor:pointer}
+  .row.prio.on{border-color:rgba(245,177,76,.55)}
+  .row.prio .tag{color:var(--amber)}
+  .row.prio .txt{font-weight:600;font-size:14px}
+  .prio-input{margin-top:10px;width:100%;background:#10151b;border:1px solid var(--line-2);
+    border-radius:10px;padding:10px 12px;color:var(--txt);font-size:14px;font-family:var(--sans);line-height:1.4}
+  .prio-input::placeholder{color:var(--dim)}
+  .prio-input:focus{outline:none;border-color:var(--amber);background:#131922}
+
   .meters{display:flex;flex-direction:column;gap:11px;margin-bottom:24px}
   .meter{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 15px}
   .meter .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
@@ -107,7 +114,6 @@
   .seg i.f{background:var(--on)}
   .meter.amber .seg i.f{background:var(--amber)}
 
-  /* ===== 미니 캘린더 ===== */
   .cal{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:22px}
   .cal .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
   .cal .top .m{font-size:13px;font-weight:600}
@@ -122,7 +128,6 @@
   .cell.l3{background:#2f9d6c;color:#0d1117;font-weight:600}
   .cell.l4{background:var(--on);color:#0d1117;font-weight:700}
 
-  /* ===== 푸터 ===== */
   .foot{display:flex;gap:10px;justify-content:center;margin-top:4px}
   .btn{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:10px;padding:9px 14px;cursor:pointer}
   .btn:active{background:var(--panel)}
@@ -139,7 +144,6 @@
   </div>
   <h1 id="today">오늘의 점검판</h1>
 
-  <!-- 게이지 -->
   <div class="gauges">
     <div class="card gauge-card">
       <div class="ring">
@@ -148,7 +152,7 @@
           <circle id="ringFill" cx="48" cy="48" r="40" fill="none" stroke="var(--on)" stroke-width="9"
                   stroke-linecap="round" stroke-dasharray="251.3" stroke-dashoffset="251.3"/>
         </svg>
-        <div class="center"><span class="num" id="ringNum">0</span><span class="den">/ 8</span></div>
+        <div class="center"><span class="num" id="ringNum">0</span><span class="den" id="ringDen">/ 7</span></div>
       </div>
       <div class="gauge-meta">
         <div class="t">오늘 가동률</div>
@@ -165,20 +169,17 @@
     </div>
   </div>
 
-  <!-- 오늘의 점검 -->
   <div class="sec">
     <span class="n">A</span><h2>오늘의 점검</h2>
-    <span class="r" id="checkCount">0 / 8</span>
+    <span class="r" id="checkCount">0 / 7</span>
   </div>
   <div class="checks" id="checks"></div>
 
-  <!-- 월간/주간 게이지 -->
   <div class="sec">
     <span class="n">B</span><h2>목표 게이지 · 월간 점검 자동 집계</h2>
   </div>
   <div class="meters" id="meters"></div>
 
-  <!-- 미니 캘린더 -->
   <div class="cal">
     <div class="top">
       <span class="m" id="calMonth">2026 · 0월</span>
@@ -186,7 +187,7 @@
         <span><span class="d" style="background:#1f3b30"></span></span>
         <span><span class="d" style="background:#256b4d"></span></span>
         <span><span class="d" style="background:#2f9d6c"></span></span>
-        <span><span class="d" style="background:var(--on)"></span>8/8</span>
+        <span><span class="d" style="background:var(--on)"></span>7/7</span>
       </span>
     </div>
     <div class="grid" id="cal"></div>
@@ -202,27 +203,26 @@
   "use strict";
   const KEY = "genius_tracker_v1";
 
-  // 8개 일일 항목 (가이드의 '오늘 당장' + 월간 점검 매핑)
+  // 항목: 1번=오늘의 단 하나(입력형) / 5번 삭제 / 2번 명칭 '노트'
   const HABITS = [
-    {id:1, tag:"습관 1 · 목적",  txt:"앵커 목표(iQ-R·전기기사)를 의식하며 일했다"},
-    {id:2, tag:"습관 2 · 능동",  txt:"새로 안 것 1개를 트러블슈팅 노트에 정리했다"},
-    {id:3, tag:"습관 3 · 독서",  txt:"책 10페이지를 읽었다"},
-    {id:4, tag:"습관 4 · 집중",  txt:"알림 끄고 딥워크 블록(90분)을 가졌다"},
-    {id:5, tag:"습관 5 · 연구",  txt:"실제 성과 낸 사람의 1차 자료를 봤다"},
-    {id:6, tag:"습관 6 · 기록",  txt:"현장 일지 3줄(막힘·해결·교훈)을 썼다"},
-    {id:7, tag:"습관 7 · 사색",  txt:"입력 없이 혼자 생각하는 시간을 가졌다"},
-    {id:8, tag:"습관 8 · 실행",  txt:"미뤘던 일의 2분 첫 걸음을 실행했다"}
+    {id:1, tag:"습관 1 · 목적", prio:true, txt:"오늘의 단 하나 — 최우선 과제"},
+    {id:2, tag:"습관 2 · 능동", txt:"새로 안 것 1개를 노트에 정리했다"},
+    {id:3, tag:"습관 3 · 독서", txt:"책 10페이지를 읽었다"},
+    {id:4, tag:"습관 4 · 집중", txt:"알림 끄고 딥워크 블록(90분)을 가졌다"},
+    {id:6, tag:"습관 6 · 기록", txt:"현장 일지 3줄(막힘·해결·교훈)을 썼다"},
+    {id:7, tag:"습관 7 · 사색", txt:"입력 없이 혼자 생각하는 시간을 가졌다"},
+    {id:8, tag:"습관 8 · 실행", txt:"미뤘던 일의 2분 첫 걸음을 실행했다"}
   ];
+  const ACTIVE_IDS = HABITS.map(h=>h.id);
+  const TOTAL = HABITS.length;
 
-  // 월간/주간 목표 게이지 정의
   const METERS = [
-    {hid:3, label:"독서일",        sub:"습관3", target:20, period:"month", color:"on"},
-    {hid:2, label:"트러블슈팅 노트", sub:"습관2", target:10, period:"month", color:"on"},
-    {hid:4, label:"딥워크 블록",     sub:"습관4", target:3,  period:"week",  color:"amber"},
-    {hid:8, label:"즉시 실행",       sub:"습관8", target:15, period:"month", color:"amber"}
+    {hid:3, label:"독서일",  sub:"습관3", target:20, period:"month", color:"on"},
+    {hid:2, label:"노트",    sub:"습관2", target:10, period:"month", color:"on"},
+    {hid:4, label:"딥워크 블록", sub:"습관4", target:3, period:"week", color:"amber"},
+    {hid:8, label:"즉시 실행", sub:"습관8", target:15, period:"month", color:"amber"}
   ];
 
-  // ---- 저장소 (아이폰=localStorage 영구저장 / Claude 미리보기=메모리 폴백) ----
   let mem = {};
   function loadAll(){
     try{ const r = localStorage.getItem(KEY); return r ? JSON.parse(r) : {}; }
@@ -233,16 +233,14 @@
     try{ localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){}
   }
 
-  // ---- 날짜 유틸 ----
   function ymd(dt){ return dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0")+"-"+String(dt.getDate()).padStart(2,"0"); }
   function parseKey(k){ const p=k.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
   const today = new Date();
   const todayKey = ymd(today);
 
   function getDay(data, key){ return data[key] || {}; }
-  function countDay(rec){ let c=0; for(let i=1;i<=8;i++) if(rec[i]) c++; return c; }
+  function countDay(rec){ let c=0; ACTIVE_IDS.forEach(id=>{ if(rec[id]) c++; }); return c; }
 
-  // 월간: 해당 습관이 체크된 '일수' (이번 달)
   function monthCount(data, hid){
     let c=0;
     for(const k in data){
@@ -251,9 +249,8 @@
     }
     return c;
   }
-  // 주간(월~일): 체크된 일수
   function weekRange(){
-    const d=new Date(today); const wd=(d.getDay()+6)%7; // 월=0
+    const d=new Date(today); const wd=(d.getDay()+6)%7;
     const mon=new Date(d); mon.setDate(d.getDate()-wd); mon.setHours(0,0,0,0);
     const sun=new Date(mon); sun.setDate(mon.getDate()+6); sun.setHours(23,59,59,999);
     return [mon,sun];
@@ -263,10 +260,8 @@
     for(const k in data){ const d=parseKey(k); if(d>=mon&&d<=sun&&data[k][hid]) c++; }
     return c;
   }
-  // 연속 실천일 (오늘부터 거꾸로, 1개 이상 체크된 날)
   function calcStreak(data){
     let c=0; const d=new Date(today);
-    // 오늘 0개면 어제부터 카운트(오늘은 아직 진행중일 수 있으므로 끊지 않음)
     if(countDay(getDay(data,ymd(d)))===0) d.setDate(d.getDate()-1);
     while(true){
       if(countDay(getDay(data,ymd(d)))>=1){ c++; d.setDate(d.getDate()-1); }
@@ -275,47 +270,59 @@
     return c;
   }
 
-  // ---- 렌더 ----
   let data = loadAll();
 
   function render(){
     const rec = getDay(data, todayKey);
     const done = countDay(rec);
 
-    // 헤더
     const wdk=["일","월","화","수","목","금","토"][today.getDay()];
     document.getElementById("today").textContent =
-      `${today.getMonth()+1}월 ${today.getDate()}일 (${wdk}) 점검판`;
+      (today.getMonth()+1)+"월 "+today.getDate()+"일 ("+wdk+") 점검판";
     document.getElementById("liveDate").textContent =
       String(today.getMonth()+1).padStart(2,"0")+"/"+String(today.getDate()).padStart(2,"0");
 
-    // 게이지(링)
-    const pct = Math.round(done/8*100);
+    const pct = Math.round(done/TOTAL*100);
     const circ = 251.3;
-    document.getElementById("ringFill").style.strokeDashoffset = circ - circ*done/8;
+    document.getElementById("ringFill").style.strokeDashoffset = circ - circ*done/TOTAL;
     document.getElementById("ringNum").textContent = done;
+    document.getElementById("ringDen").textContent = "/ "+TOTAL;
     document.getElementById("pct").textContent = pct+"%";
     document.getElementById("ringSub").textContent =
-      done===8 ? "완벽 가동 — 오늘 8/8" : done>=5 ? "좋은 가동률입니다" : done>=1 ? "켜진 만큼 쌓입니다" : "하나만 켜도 시작입니다";
-    document.getElementById("checkCount").textContent = done+" / 8";
+      done===TOTAL ? ("완벽 가동 — 오늘 "+TOTAL+"/"+TOTAL) : done>=Math.ceil(TOTAL*0.6) ? "좋은 가동률입니다" : done>=1 ? "켜진 만큼 쌓입니다" : "하나만 켜도 시작입니다";
+    document.getElementById("checkCount").textContent = done+" / "+TOTAL;
 
-    // 스트릭
     document.getElementById("streak").textContent = calcStreak(data);
 
-    // 체크 행
     const cont = document.getElementById("checks");
     cont.innerHTML = "";
     HABITS.forEach(h=>{
       const on = !!rec[h.id];
       const row = document.createElement("div");
-      row.className = "row"+(on?" on":"");
-      row.innerHTML = `<div class="lamp"></div>
-        <div class="body"><div class="tag">${h.tag}</div><div class="txt">${h.txt}</div></div>`;
-      row.addEventListener("click", ()=>toggle(h.id));
+      if(h.prio){
+        row.className = "row prio"+(on?" on":"");
+        row.innerHTML =
+          '<div class="lamp"></div>'+
+          '<div class="body">'+
+            '<div class="tag">'+h.tag+' · 오늘의 단 하나</div>'+
+            '<div class="txt">'+h.txt+'</div>'+
+            '<input class="prio-input" type="text" placeholder="앵커(레퍼런스 라인)로 향하는 오늘 가장 중요한 한 가지">'+
+          '</div>';
+        const inp = row.querySelector(".prio-input");
+        inp.value = rec.priority || "";
+        inp.addEventListener("input", function(){ savePriority(inp.value); });
+        inp.addEventListener("click", function(e){ e.stopPropagation(); });
+        row.querySelector(".lamp").addEventListener("click", function(){ toggle(h.id); });
+      } else {
+        row.className = "row"+(on?" on":"");
+        row.innerHTML =
+          '<div class="lamp"></div>'+
+          '<div class="body"><div class="tag">'+h.tag+'</div><div class="txt">'+h.txt+'</div></div>';
+        row.addEventListener("click", function(){ toggle(h.id); });
+      }
       cont.appendChild(row);
     });
 
-    // 미터
     const mc = document.getElementById("meters");
     mc.innerHTML = "";
     METERS.forEach(m=>{
@@ -324,13 +331,13 @@
       const isDone = cur>=m.target;
       const periodTxt = m.period==="week" ? "이번 주" : "이번 달";
       let segs="";
-      for(let i=0;i<m.target;i++) segs += `<i class="${i<filled?'f':''}"></i>`;
+      for(let i=0;i<m.target;i++) segs += '<i class="'+(i<filled?'f':'')+'"></i>';
       const el = document.createElement("div");
       el.className = "meter "+(m.color==="amber"?"amber ":"")+(isDone?"done":"");
-      el.innerHTML = `<div class="top">
-          <div class="name">${m.label} <span>· ${m.sub} · ${periodTxt}</span></div>
-          <div class="val"><b>${cur}</b> / ${m.target}${isDone?" ✓":""}</div>
-        </div><div class="seg">${segs}</div>`;
+      el.innerHTML = '<div class="top">'+
+          '<div class="name">'+m.label+' <span>· '+m.sub+' · '+periodTxt+'</span></div>'+
+          '<div class="val"><b>'+cur+'</b> / '+m.target+(isDone?" ✓":"")+'</div>'+
+        '</div><div class="seg">'+segs+'</div>';
       mc.appendChild(el);
     });
 
@@ -339,20 +346,20 @@
 
   function renderCal(){
     const y=today.getFullYear(), mo=today.getMonth();
-    document.getElementById("calMonth").textContent = `${y} · ${mo+1}월`;
+    document.getElementById("calMonth").textContent = y+" · "+(mo+1)+"월";
     const grid=document.getElementById("cal");
     grid.innerHTML="";
     ["월","화","수","목","금","토","일"].forEach(w=>{
       const e=document.createElement("div"); e.className="wd"; e.textContent=w; grid.appendChild(e);
     });
     const first=new Date(y,mo,1);
-    const lead=(first.getDay()+6)%7; // 월요일 시작
+    const lead=(first.getDay()+6)%7;
     for(let i=0;i<lead;i++){ const e=document.createElement("div"); grid.appendChild(e); }
     const days=new Date(y,mo+1,0).getDate();
     for(let d=1;d<=days;d++){
       const key=ymd(new Date(y,mo,d));
       const n=countDay(getDay(data,key));
-      const lv = n===0?0 : n<=3?1 : n<=5?2 : n<=7?3 : 4;
+      const lv = n===0?0 : n<=2?1 : n<=4?2 : n<=6?3 : 4;
       const cell=document.createElement("div");
       cell.className="cell"+(lv?" l"+lv:"")+(key===todayKey?" today":"");
       cell.textContent=d;
@@ -369,7 +376,14 @@
     if(navigator.vibrate) try{navigator.vibrate(8);}catch(e){}
   }
 
-  document.getElementById("resetToday").addEventListener("click", ()=>{
+  function savePriority(text){
+    if(!data[todayKey]) data[todayKey]={};
+    if(text && text.length){ data[todayKey].priority = text; }
+    else { delete data[todayKey].priority; }
+    saveAll(data);
+  }
+
+  document.getElementById("resetToday").addEventListener("click", function(){
     if(confirm("오늘 체크를 모두 초기화할까요?")){
       delete data[todayKey]; saveAll(data); render();
     }
