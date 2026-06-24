@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
 <title>자기주도 학습 점검판</title>
 
-<!-- iPhone 홈 화면 앱 설정 -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="학습 점검판">
@@ -14,35 +13,25 @@
 
 <style>
   :root{
-    --bg:#0d1117;
-    --panel:#161b22;
-    --panel-2:#1c232c;
-    --line:#283039;
-    --line-2:#323b46;
-    --txt:#e6edf3;
-    --muted:#7d8896;
-    --dim:#5a6570;
-    --on:#3fe0a0;
-    --on-glow:rgba(63,224,160,.18);
-    --amber:#f5b14c;
-    --amber-dim:rgba(245,177,76,.15);
+    --bg:#0d1117;--panel:#161b22;--panel-2:#1c232c;--line:#283039;--line-2:#323b46;
+    --txt:#e6edf3;--muted:#7d8896;--dim:#5a6570;--on:#3fe0a0;--on-glow:rgba(63,224,160,.18);
+    --amber:#f5b14c;--amber-dim:rgba(245,177,76,.15);
     --mono:ui-monospace,'SF Mono',Menlo,monospace;
     --sans:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Pretendard',sans-serif;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
   html,body{background:var(--bg)}
-  body{
-    font-family:var(--sans);color:var(--txt);
+  body{font-family:var(--sans);color:var(--txt);
     padding:calc(env(safe-area-inset-top) + 18px) 16px calc(env(safe-area-inset-bottom) + 28px);
     max-width:520px;margin:0 auto;-webkit-font-smoothing:antialiased;
-    background-image:radial-gradient(120% 60% at 50% -10%, #131a22 0%, var(--bg) 60%);
-  }
-
+    background-image:radial-gradient(120% 60% at 50% -10%, #131a22 0%, var(--bg) 60%);}
   .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
   .head .label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase}
   .head .live{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em}
   .live .dot{width:7px;height:7px;border-radius:50%;background:var(--on);box-shadow:0 0 8px var(--on)}
-  h1{font-size:20px;font-weight:700;letter-spacing:-.01em;margin:2px 0 18px}
+  h1{font-size:20px;font-weight:700;letter-spacing:-.01em;margin:2px 0 6px}
+  .syncbar{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin:0 0 16px 2px;letter-spacing:.03em}
+  .syncbar.ok{color:var(--on)} .syncbar.warn{color:var(--amber)} .syncbar.err{color:#e0726a}
 
   .gauges{display:grid;grid-template-columns:1.15fr 1fr;gap:12px;margin-bottom:22px}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px}
@@ -55,7 +44,6 @@
   .gauge-meta .t{font-size:12px;color:var(--muted);letter-spacing:.02em}
   .gauge-meta .pct{font-family:var(--mono);font-size:30px;font-weight:600;margin-top:2px;line-height:1}
   .gauge-meta .sub{font-size:11px;color:var(--dim);margin-top:5px}
-
   .streak-card{display:flex;flex-direction:column;justify-content:center;background:linear-gradient(160deg,#1d2128,#161b22)}
   .streak-card .t{font-size:12px;color:var(--muted)}
   .streak-num{font-family:var(--mono);font-size:42px;font-weight:600;color:var(--amber);line-height:1;margin:4px 0 2px;text-shadow:0 0 18px var(--amber-dim)}
@@ -68,18 +56,11 @@
   .sec .r{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--dim)}
 
   .checks{display:flex;flex-direction:column;gap:8px;margin-bottom:26px}
-  .row{
-    display:flex;align-items:center;gap:14px;background:var(--panel);
-    border:1px solid var(--line);border-radius:14px;padding:14px 15px;cursor:pointer;
-    transition:border-color .18s, background .18s;user-select:none;
-  }
+  .row{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:14px 15px;cursor:pointer;transition:border-color .18s, background .18s;user-select:none}
   .row:active{background:var(--panel-2)}
   .row.on{border-color:rgba(63,224,160,.4);background:linear-gradient(90deg,var(--on-glow),transparent 60%),var(--panel)}
-  .lamp{
-    width:26px;height:26px;flex:0 0 auto;border-radius:50%;
-    border:2px solid var(--line-2);background:#10151b;position:relative;
-    transition:all .2s;
-  }
+  .lamp{width:26px;height:26px;flex:0 0 auto;border-radius:50%;border:2px solid var(--line-2);background:#10151b;position:relative;transition:all .2s}
   .lamp::after{content:"";position:absolute;inset:0;margin:auto;width:10px;height:10px;border-radius:50%;background:transparent;transition:all .2s}
   .row.on .lamp{border-color:var(--on);box-shadow:0 0 14px var(--on-glow),inset 0 0 8px var(--on-glow)}
   .row.on .lamp::after{background:var(--on);box-shadow:0 0 10px var(--on)}
@@ -89,7 +70,6 @@
   .row .txt{font-size:13.5px;line-height:1.35;color:var(--txt);font-weight:450}
   .row.on .txt{color:#fff}
 
-  /* 오늘의 단 하나 — 최우선 과제 (입력형) */
   .row.prio{align-items:flex-start;cursor:default;border-color:rgba(245,177,76,.32);
     background:linear-gradient(90deg,var(--amber-dim),transparent 55%),var(--panel)}
   .row.prio .lamp{margin-top:2px;cursor:pointer}
@@ -132,7 +112,6 @@
   .btn{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:10px;padding:9px 14px;cursor:pointer}
   .btn:active{background:var(--panel)}
   .note{text-align:center;font-size:10.5px;color:var(--dim);margin-top:14px;line-height:1.5}
-
   @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 </head>
@@ -143,6 +122,7 @@
     <span class="live"><span class="dot"></span><span id="liveDate">--/--</span></span>
   </div>
   <h1 id="today">오늘의 점검판</h1>
+  <div class="syncbar" id="syncBar">● 로컬 모드</div>
 
   <div class="gauges">
     <div class="card gauge-card">
@@ -160,7 +140,6 @@
         <div class="sub" id="ringSub">하나만 켜도 시작입니다</div>
       </div>
     </div>
-
     <div class="card streak-card">
       <div class="t">연속 실천일</div>
       <div class="streak-num" id="streak">0</div>
@@ -169,15 +148,10 @@
     </div>
   </div>
 
-  <div class="sec">
-    <span class="n">A</span><h2>오늘의 점검</h2>
-    <span class="r" id="checkCount">0 / 7</span>
-  </div>
+  <div class="sec"><span class="n">A</span><h2>오늘의 점검</h2><span class="r" id="checkCount">0 / 7</span></div>
   <div class="checks" id="checks"></div>
 
-  <div class="sec">
-    <span class="n">B</span><h2>목표 게이지 · 월간 점검 자동 집계</h2>
-  </div>
+  <div class="sec"><span class="n">B</span><h2>목표 게이지 · 월간 점검 자동 집계</h2></div>
   <div class="meters" id="meters"></div>
 
   <div class="cal">
@@ -193,17 +167,22 @@
     <div class="grid" id="cal"></div>
   </div>
 
-  <div class="foot">
-    <button class="btn" id="resetToday">오늘 초기화</button>
-  </div>
-  <div class="note">기록은 이 기기에만 저장됩니다 · 홈 화면에 추가하면 앱처럼 열립니다</div>
+  <div class="foot"><button class="btn" id="resetToday">오늘 초기화</button></div>
+  <div class="note">PC·아이폰 어디서 적어도 같은 기록 · Google Sheets 동기화</div>
 
 <script>
 (function(){
   "use strict";
+
+  // ==========================================================
+  //  ↓↓↓ 여기에 Apps Script 웹앱 URL(.../exec)을 붙여넣으세요 ↓↓↓
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzjIB8B8bC2sXVS7E_whA8_kWDj9u_2umobOXxIMXdAalZJ2x-29XUr17PdSFLfw3Gy/exec";
+  //  비워두면 이 기기에만 저장(동기화 안 함). URL을 넣으면 PC·폰이 공유됩니다.
+  // ==========================================================
+
+  const CLOUD = WEB_APP_URL && WEB_APP_URL.indexOf("http") === 0;
   const KEY = "genius_tracker_v1";
 
-  // 항목: 1번=오늘의 단 하나(입력형) / 5번 삭제 / 2번 명칭 '노트'
   const HABITS = [
     {id:1, tag:"습관 1 · 목적", prio:true, txt:"오늘의 단 하나 — 최우선 과제"},
     {id:2, tag:"습관 2 · 능동", txt:"새로 안 것 1개를 노트에 정리했다"},
@@ -213,7 +192,7 @@
     {id:7, tag:"습관 7 · 사색", txt:"입력 없이 혼자 생각하는 시간을 가졌다"},
     {id:8, tag:"습관 8 · 실행", txt:"미뤘던 일의 2분 첫 걸음을 실행했다"}
   ];
-  const ACTIVE_IDS = HABITS.map(h=>h.id);
+  const ACTIVE_IDS = HABITS.map(function(h){return h.id;});
   const TOTAL = HABITS.length;
 
   const METERS = [
@@ -223,173 +202,145 @@
     {hid:8, label:"즉시 실행", sub:"습관8", target:15, period:"month", color:"amber"}
   ];
 
+  // ---- 로컬 캐시 ----
   let mem = {};
-  function loadAll(){
-    try{ const r = localStorage.getItem(KEY); return r ? JSON.parse(r) : {}; }
-    catch(e){ return mem; }
-  }
-  function saveAll(d){
-    mem = d;
-    try{ localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){}
-  }
+  function loadAll(){ try{ var r=localStorage.getItem(KEY); return r?JSON.parse(r):{}; }catch(e){ return mem; } }
+  function saveAll(d){ mem=d; try{ localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){} }
 
+  // ---- 날짜 ----
   function ymd(dt){ return dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0")+"-"+String(dt.getDate()).padStart(2,"0"); }
-  function parseKey(k){ const p=k.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function parseKey(k){ var p=k.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
   const today = new Date();
   const todayKey = ymd(today);
 
-  function getDay(data, key){ return data[key] || {}; }
-  function countDay(rec){ let c=0; ACTIVE_IDS.forEach(id=>{ if(rec[id]) c++; }); return c; }
+  function getDay(d,k){ return d[k]||{}; }
+  function countDay(rec){ var c=0; ACTIVE_IDS.forEach(function(id){ if(rec[id]) c++; }); return c; }
+  function monthCount(d,hid){ var c=0; for(var k in d){ var x=parseKey(k); if(x.getFullYear()===today.getFullYear()&&x.getMonth()===today.getMonth()&&d[k][hid]) c++; } return c; }
+  function weekRange(){ var d=new Date(today); var wd=(d.getDay()+6)%7; var mon=new Date(d); mon.setDate(d.getDate()-wd); mon.setHours(0,0,0,0); var sun=new Date(mon); sun.setDate(mon.getDate()+6); sun.setHours(23,59,59,999); return [mon,sun]; }
+  function weekCount(d,hid){ var r=weekRange(),c=0; for(var k in d){ var x=parseKey(k); if(x>=r[0]&&x<=r[1]&&d[k][hid]) c++; } return c; }
+  function calcStreak(d){ var c=0,x=new Date(today); if(countDay(getDay(d,ymd(x)))===0) x.setDate(x.getDate()-1); while(countDay(getDay(d,ymd(x)))>=1){ c++; x.setDate(x.getDate()-1); } return c; }
 
-  function monthCount(data, hid){
-    let c=0;
-    for(const k in data){
-      const d=parseKey(k);
-      if(d.getFullYear()===today.getFullYear() && d.getMonth()===today.getMonth() && data[k][hid]) c++;
-    }
-    return c;
-  }
-  function weekRange(){
-    const d=new Date(today); const wd=(d.getDay()+6)%7;
-    const mon=new Date(d); mon.setDate(d.getDate()-wd); mon.setHours(0,0,0,0);
-    const sun=new Date(mon); sun.setDate(mon.getDate()+6); sun.setHours(23,59,59,999);
-    return [mon,sun];
-  }
-  function weekCount(data, hid){
-    const [mon,sun]=weekRange(); let c=0;
-    for(const k in data){ const d=parseKey(k); if(d>=mon&&d<=sun&&data[k][hid]) c++; }
-    return c;
-  }
-  function calcStreak(data){
-    let c=0; const d=new Date(today);
-    if(countDay(getDay(data,ymd(d)))===0) d.setDate(d.getDate()-1);
-    while(true){
-      if(countDay(getDay(data,ymd(d)))>=1){ c++; d.setDate(d.getDate()-1); }
-      else break;
-    }
-    return c;
+  // ---- 동기화 ----
+  function setStatus(txt, cls){ var el=document.getElementById("syncBar"); el.textContent=txt; el.className="syncbar "+(cls||""); }
+
+  function cloudLoad(){
+    setStatus("● 동기화 중…","warn");
+    fetch(WEB_APP_URL+"?t="+Date.now(), {method:"GET", cache:"no-store"})
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if(j && j.ok && j.data){
+          var ae=document.activeElement;
+          var typing = ae && ae.classList && ae.classList.contains("prio-input");
+          data = j.data; saveAll(data);
+          if(!typing) render();
+          setStatus("● 동기화됨 · PC·폰 공유","ok");
+        } else { setStatus("● 응답 오류 — 로컬 사용","err"); }
+      })
+      .catch(function(){ setStatus("● 오프라인 — 로컬 사용","err"); });
   }
 
+  function pushDay(dateKey){
+    if(!CLOUD) return;
+    var rec = data[dateKey] || {};
+    setStatus("● 저장 중…","warn");
+    fetch(WEB_APP_URL, { method:"POST", body: JSON.stringify({date:dateKey, rec:rec}) })
+      .then(function(r){ return r.json(); })
+      .then(function(j){ setStatus(j&&j.ok?"● 저장됨 · PC·폰 공유":"● 저장 실패", j&&j.ok?"ok":"err"); })
+      .catch(function(){ setStatus("● 저장 대기 (오프라인)","err"); });
+  }
+
+  // ---- 렌더 ----
   let data = loadAll();
 
   function render(){
-    const rec = getDay(data, todayKey);
-    const done = countDay(rec);
+    var rec=getDay(data,todayKey), done=countDay(rec);
+    var wdk=["일","월","화","수","목","금","토"][today.getDay()];
+    document.getElementById("today").textContent=(today.getMonth()+1)+"월 "+today.getDate()+"일 ("+wdk+") 점검판";
+    document.getElementById("liveDate").textContent=String(today.getMonth()+1).padStart(2,"0")+"/"+String(today.getDate()).padStart(2,"0");
 
-    const wdk=["일","월","화","수","목","금","토"][today.getDay()];
-    document.getElementById("today").textContent =
-      (today.getMonth()+1)+"월 "+today.getDate()+"일 ("+wdk+") 점검판";
-    document.getElementById("liveDate").textContent =
-      String(today.getMonth()+1).padStart(2,"0")+"/"+String(today.getDate()).padStart(2,"0");
+    var pct=Math.round(done/TOTAL*100), circ=251.3;
+    document.getElementById("ringFill").style.strokeDashoffset=circ-circ*done/TOTAL;
+    document.getElementById("ringNum").textContent=done;
+    document.getElementById("ringDen").textContent="/ "+TOTAL;
+    document.getElementById("pct").textContent=pct+"%";
+    document.getElementById("ringSub").textContent=done===TOTAL?("완벽 가동 — 오늘 "+TOTAL+"/"+TOTAL):done>=Math.ceil(TOTAL*0.6)?"좋은 가동률입니다":done>=1?"켜진 만큼 쌓입니다":"하나만 켜도 시작입니다";
+    document.getElementById("checkCount").textContent=done+" / "+TOTAL;
+    document.getElementById("streak").textContent=calcStreak(data);
 
-    const pct = Math.round(done/TOTAL*100);
-    const circ = 251.3;
-    document.getElementById("ringFill").style.strokeDashoffset = circ - circ*done/TOTAL;
-    document.getElementById("ringNum").textContent = done;
-    document.getElementById("ringDen").textContent = "/ "+TOTAL;
-    document.getElementById("pct").textContent = pct+"%";
-    document.getElementById("ringSub").textContent =
-      done===TOTAL ? ("완벽 가동 — 오늘 "+TOTAL+"/"+TOTAL) : done>=Math.ceil(TOTAL*0.6) ? "좋은 가동률입니다" : done>=1 ? "켜진 만큼 쌓입니다" : "하나만 켜도 시작입니다";
-    document.getElementById("checkCount").textContent = done+" / "+TOTAL;
-
-    document.getElementById("streak").textContent = calcStreak(data);
-
-    const cont = document.getElementById("checks");
-    cont.innerHTML = "";
-    HABITS.forEach(h=>{
-      const on = !!rec[h.id];
-      const row = document.createElement("div");
+    var cont=document.getElementById("checks"); cont.innerHTML="";
+    HABITS.forEach(function(h){
+      var on=!!rec[h.id], row=document.createElement("div");
       if(h.prio){
-        row.className = "row prio"+(on?" on":"");
-        row.innerHTML =
-          '<div class="lamp"></div>'+
-          '<div class="body">'+
-            '<div class="tag">'+h.tag+' · 오늘의 단 하나</div>'+
-            '<div class="txt">'+h.txt+'</div>'+
-            '<input class="prio-input" type="text" placeholder="앵커(레퍼런스 라인)로 향하는 오늘 가장 중요한 한 가지">'+
-          '</div>';
-        const inp = row.querySelector(".prio-input");
-        inp.value = rec.priority || "";
+        row.className="row prio"+(on?" on":"");
+        row.innerHTML='<div class="lamp"></div><div class="body"><div class="tag">'+h.tag+' · 오늘의 단 하나</div><div class="txt">'+h.txt+'</div><input class="prio-input" type="text" placeholder="앵커(레퍼런스 라인)로 향하는 오늘 가장 중요한 한 가지"></div>';
+        var inp=row.querySelector(".prio-input");
+        inp.value=rec.priority||"";
         inp.addEventListener("input", function(){ savePriority(inp.value); });
         inp.addEventListener("click", function(e){ e.stopPropagation(); });
         row.querySelector(".lamp").addEventListener("click", function(){ toggle(h.id); });
       } else {
-        row.className = "row"+(on?" on":"");
-        row.innerHTML =
-          '<div class="lamp"></div>'+
-          '<div class="body"><div class="tag">'+h.tag+'</div><div class="txt">'+h.txt+'</div></div>';
+        row.className="row"+(on?" on":"");
+        row.innerHTML='<div class="lamp"></div><div class="body"><div class="tag">'+h.tag+'</div><div class="txt">'+h.txt+'</div></div>';
         row.addEventListener("click", function(){ toggle(h.id); });
       }
       cont.appendChild(row);
     });
 
-    const mc = document.getElementById("meters");
-    mc.innerHTML = "";
-    METERS.forEach(m=>{
-      const cur = m.period==="week" ? weekCount(data,m.hid) : monthCount(data,m.hid);
-      const filled = Math.min(cur, m.target);
-      const isDone = cur>=m.target;
-      const periodTxt = m.period==="week" ? "이번 주" : "이번 달";
-      let segs="";
-      for(let i=0;i<m.target;i++) segs += '<i class="'+(i<filled?'f':'')+'"></i>';
-      const el = document.createElement("div");
-      el.className = "meter "+(m.color==="amber"?"amber ":"")+(isDone?"done":"");
-      el.innerHTML = '<div class="top">'+
-          '<div class="name">'+m.label+' <span>· '+m.sub+' · '+periodTxt+'</span></div>'+
-          '<div class="val"><b>'+cur+'</b> / '+m.target+(isDone?" ✓":"")+'</div>'+
-        '</div><div class="seg">'+segs+'</div>';
+    var mc=document.getElementById("meters"); mc.innerHTML="";
+    METERS.forEach(function(m){
+      var cur=m.period==="week"?weekCount(data,m.hid):monthCount(data,m.hid);
+      var filled=Math.min(cur,m.target), isDone=cur>=m.target;
+      var periodTxt=m.period==="week"?"이번 주":"이번 달", segs="";
+      for(var i=0;i<m.target;i++) segs+='<i class="'+(i<filled?'f':'')+'"></i>';
+      var el=document.createElement("div");
+      el.className="meter "+(m.color==="amber"?"amber ":"")+(isDone?"done":"");
+      el.innerHTML='<div class="top"><div class="name">'+m.label+' <span>· '+m.sub+' · '+periodTxt+'</span></div><div class="val"><b>'+cur+'</b> / '+m.target+(isDone?" ✓":"")+'</div></div><div class="seg">'+segs+'</div>';
       mc.appendChild(el);
     });
-
     renderCal();
   }
 
   function renderCal(){
-    const y=today.getFullYear(), mo=today.getMonth();
-    document.getElementById("calMonth").textContent = y+" · "+(mo+1)+"월";
-    const grid=document.getElementById("cal");
-    grid.innerHTML="";
-    ["월","화","수","목","금","토","일"].forEach(w=>{
-      const e=document.createElement("div"); e.className="wd"; e.textContent=w; grid.appendChild(e);
-    });
-    const first=new Date(y,mo,1);
-    const lead=(first.getDay()+6)%7;
-    for(let i=0;i<lead;i++){ const e=document.createElement("div"); grid.appendChild(e); }
-    const days=new Date(y,mo+1,0).getDate();
-    for(let d=1;d<=days;d++){
-      const key=ymd(new Date(y,mo,d));
-      const n=countDay(getDay(data,key));
-      const lv = n===0?0 : n<=2?1 : n<=4?2 : n<=6?3 : 4;
-      const cell=document.createElement("div");
+    var y=today.getFullYear(), mo=today.getMonth();
+    document.getElementById("calMonth").textContent=y+" · "+(mo+1)+"월";
+    var grid=document.getElementById("cal"); grid.innerHTML="";
+    ["월","화","수","목","금","토","일"].forEach(function(w){ var e=document.createElement("div"); e.className="wd"; e.textContent=w; grid.appendChild(e); });
+    var lead=(new Date(y,mo,1).getDay()+6)%7;
+    for(var i=0;i<lead;i++){ grid.appendChild(document.createElement("div")); }
+    var days=new Date(y,mo+1,0).getDate();
+    for(var d=1;d<=days;d++){
+      var key=ymd(new Date(y,mo,d)), n=countDay(getDay(data,key));
+      var lv=n===0?0:n<=2?1:n<=4?2:n<=6?3:4;
+      var cell=document.createElement("div");
       cell.className="cell"+(lv?" l"+lv:"")+(key===todayKey?" today":"");
-      cell.textContent=d;
-      grid.appendChild(cell);
+      cell.textContent=d; grid.appendChild(cell);
     }
   }
 
+  var prioTimer=null;
   function toggle(id){
     if(!data[todayKey]) data[todayKey]={};
-    data[todayKey][id] = !data[todayKey][id];
+    data[todayKey][id]=!data[todayKey][id];
     if(!data[todayKey][id]) delete data[todayKey][id];
-    saveAll(data);
-    render();
+    saveAll(data); render(); pushDay(todayKey);
     if(navigator.vibrate) try{navigator.vibrate(8);}catch(e){}
   }
-
   function savePriority(text){
     if(!data[todayKey]) data[todayKey]={};
-    if(text && text.length){ data[todayKey].priority = text; }
-    else { delete data[todayKey].priority; }
+    if(text&&text.length) data[todayKey].priority=text; else delete data[todayKey].priority;
     saveAll(data);
+    if(prioTimer) clearTimeout(prioTimer);
+    prioTimer=setTimeout(function(){ pushDay(todayKey); }, 800);
   }
 
   document.getElementById("resetToday").addEventListener("click", function(){
-    if(confirm("오늘 체크를 모두 초기화할까요?")){
-      delete data[todayKey]; saveAll(data); render();
-    }
+    if(confirm("오늘 체크를 모두 초기화할까요?")){ delete data[todayKey]; saveAll(data); render(); pushDay(todayKey); }
   });
 
+  // 시작
   render();
+  if(CLOUD){ cloudLoad(); } else { setStatus("● 로컬 모드 (이 기기에만 저장)","dim"); }
+  document.addEventListener("visibilitychange", function(){ if(document.visibilityState==="visible" && CLOUD) cloudLoad(); });
 })();
 </script>
 </body>
